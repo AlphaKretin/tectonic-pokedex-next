@@ -28,16 +28,18 @@ const Home: NextPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <Head>
                 <title>Pokemon Data Viewer</title>
                 <meta name="description" content="View Pokemon data" />
             </Head>
 
             <main className="container mx-auto py-8 px-4">
-                <h1 className="text-3xl font-bold text-center mb-8 text-blue-800">Pokemon Data Viewer</h1>
+                <h1 className="text-3xl font-bold text-center mb-8 text-blue-800 dark:text-blue-300">
+                    Pokemon Data Viewer
+                </h1>
 
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
                     <PokemonTable mons={Object.values(pokemon)} onRowClick={handleRowClick} />
                 </div>
             </main>

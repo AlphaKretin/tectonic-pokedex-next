@@ -1,35 +1,72 @@
+import { useEffect, useState } from "react";
 import { PokemonModalProps } from "../page";
 
 const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
-    if (!pokemon) return null;
+    const [isVisible, setIsVisible] = useState(false);
+    const [isRendered, setIsRendered] = useState(false);
+    const [currentPokemon, setCurrentPokemon] = useState(pokemon);
+
+    useEffect(() => {
+        if (pokemon) {
+            setCurrentPokemon(pokemon); // Update to the new Pokémon
+            setIsRendered(true);
+            setTimeout(() => setIsVisible(true), 10); // Slight delay to trigger animation
+        } else {
+            setIsVisible(false);
+            setTimeout(() => setIsRendered(false), 300); // Match duration-300 for fade-out
+        }
+    }, [pokemon]);
+
+    const handleClose = () => {
+        setIsVisible(false);
+        setTimeout(() => {
+            setIsRendered(false);
+            onClose(); // Call the onClose callback after fade-out
+        }, 300); // Match duration-300 for fade-out
+    };
+
+    if (!isRendered || !currentPokemon) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div
+            onClick={handleClose} // Close modal on background click
+            className={`fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 z-50 transition-opacity duration-300 ${
+                isVisible ? "opacity-100" : "opacity-0"
+            }`}
+        >
+            <div
+                onClick={(e) => e.stopPropagation()} // Prevent background click from closing modal
+                className={`bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-transform duration-300 ${
+                    isVisible ? "scale-100" : "scale-95"
+                }`}
+            >
                 <div className="p-6">
                     <div className="flex justify-between items-start">
                         <div>
-                            <h2 className="text-2xl font-bold text-gray-800">
-                                {pokemon.name} #{pokemon.id}
+                            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                                {currentPokemon.name} #{currentPokemon.id}
                             </h2>
                             <div className="flex space-x-2 mt-1">
                                 <span
-                                    key={pokemon.type1}
-                                    className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                                    key={currentPokemon.type1}
+                                    className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
                                 >
-                                    {pokemon.type1}
+                                    {currentPokemon.type1}
                                 </span>
-                                {pokemon.type2 && (
+                                {currentPokemon.type2 && (
                                     <span
-                                        key={pokemon.type2}
-                                        className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                                        key={currentPokemon.type2}
+                                        className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
                                     >
-                                        {pokemon.type2}
+                                        {currentPokemon.type2}
                                     </span>
                                 )}
                             </div>
                         </div>
-                        <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+                        <button
+                            onClick={handleClose}
+                            className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
+                        >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path
                                     strokeLinecap="round"
@@ -42,61 +79,21 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                     </div>
 
                     <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {/* <div className="md:col-span-1">
-                            {pokemon.artwork && (
-                                <img
-                                    src={pokemon.artwork}
-                                    alt={pokemon.name}
-                                    className="w-full h-auto rounded-lg bg-gray-100"
-                                />
-                            )}
-                        </div> */}
-
-                        <div className="md:col-span-2">
-                            {/* {pokemon.description && <p className="text-gray-700 mb-4">{pokemon.description}</p>} */}
-
-                            <div className="grid grid-cols-2 gap-4">
-                                {/* <div>
-                                    <h3 className="font-semibold text-gray-800">Height</h3>
-                                    <p className="text-gray-600">{pokemon.height || "N/A"} m</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800">Weight</h3>
-                                    <p className="text-gray-600">{pokemon.weight || "N/A"} kg</p>
-                                </div> */}
-                                <div>
-                                    <h3 className="font-semibold text-gray-800">HP</h3>
-                                    <p className="text-gray-600">{pokemon.stats.hp}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800">Attack</h3>
-                                    <p className="text-gray-600">{pokemon.stats.attack}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800">Defense</h3>
-                                    <p className="text-gray-600">{pokemon.stats.defense}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-semibold text-gray-800">Speed</h3>
-                                    <p className="text-gray-600">{pokemon.stats.speed}</p>
-                                </div>
-                            </div>
-
-                            {/* {pokemon.abilities && pokemon.abilities.length > 0 && (
-                                <div className="mt-4">
-                                    <h3 className="font-semibold text-gray-800">Abilities</h3>
-                                    <div className="flex flex-wrap gap-2 mt-1">
-                                        {pokemon.abilities.map((ability) => (
-                                            <span
-                                                key={ability}
-                                                className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800"
-                                            >
-                                                {ability}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            )} */}
+                        <div>
+                            <h3 className="font-semibold text-gray-800 dark:text-gray-100">HP</h3>
+                            <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.hp}</p>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-gray-800 dark:text-gray-100">Attack</h3>
+                            <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.attack}</p>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-gray-800 dark:text-gray-100">Defense</h3>
+                            <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.defense}</p>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold text-gray-800 dark:text-gray-100">Speed</h3>
+                            <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.speed}</p>
                         </div>
                     </div>
                 </div>
