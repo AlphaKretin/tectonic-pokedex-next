@@ -3,40 +3,40 @@ import { PokemonType } from "../data/pokemon";
 export function getTypeColourClass(type: PokemonType): string {
     switch (type) {
         case "Fire":
-            return "red-500";
+            return "bg-red-500";
         case "Water":
-            return "blue-500";
+            return "bg-blue-500";
         case "Grass":
-            return "green-500";
+            return "bg-green-500";
         case "Electric":
-            return "yellow-500";
+            return "bg-yellow-500";
         case "Psychic":
-            return "purple-500";
+            return "bg-purple-500";
         case "Ice":
-            return "cyan-500";
+            return "bg-cyan-500";
         case "Dragon":
-            return "indigo-500";
+            return "bg-indigo-500";
         case "Dark":
-            return "gray-800";
+            return "bg-gray-800";
         case "Fairy":
-            return "pink-500";
+            return "bg-pink-500";
         case "Fighting":
-            return "orange-500";
+            return "bg-orange-500";
         case "Flying":
-            return "sky-500";
+            return "bg-sky-500";
         case "Poison":
-            return "purple-700";
+            return "bg-purple-700";
         case "Ground":
-            return "yellow-700";
+            return "bg-yellow-700";
         case "Rock":
-            return "gray-600";
+            return "bg-gray-600";
         case "Bug":
-            return "green-700";
+            return "bg-green-700";
         case "Ghost":
-            return "indigo-700";
+            return "bg-indigo-700";
         case "Steel":
-            return "gray-400";
+            return "bg-gray-400";
         default:
-            return "gray-500";
+            return "bg-gray-500";
     }
 }

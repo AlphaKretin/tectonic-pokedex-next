@@ -45,7 +45,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                 <div className="flex space-x-2">
                                     <span
-                                        className={`px-2 py-1 rounded-full text-white text-xs font-semibold bg-${getTypeColourClass(
+                                        className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeColourClass(
                                             pokemon.type1
                                         )}`}
                                     >
@@ -53,7 +53,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
                                     </span>
                                     {pokemon.type2 && (
                                         <span
-                                            className={`px-2 py-1 rounded-full text-white text-xs font-semibold bg-${getTypeColourClass(
+                                            className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeColourClass(
                                                 pokemon.type2
                                             )}`}
                                         >
