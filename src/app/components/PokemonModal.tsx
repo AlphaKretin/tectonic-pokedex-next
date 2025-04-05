@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { PokemonModalProps } from "../page";
+import { getTypeColourClass } from "./colours";
 
 const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isRendered, setIsRendered] = useState(false);
     const [currentPokemon, setCurrentPokemon] = useState(pokemon);
-    const [activeTab, setActiveTab] = useState("stats"); // Track active tab
+    const [activeTab, setActiveTab] = useState<Tab>("Stats"); // Track active tab
 
     useEffect(() => {
         if (pokemon) {
@@ -26,9 +27,12 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
         }, 300); // Match duration-300 for fade-out
     };
 
-    const handleTabChange = (tab: string) => {
+    const handleTabChange = (tab: Tab) => {
         setActiveTab(tab);
     };
+
+    const tabs = ["Stats", "Abilities", "Moves"] as const;
+    type Tab = (typeof tabs)[number];
 
     if (!isRendered || !currentPokemon) return null;
 
@@ -53,15 +57,17 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                             </h2>
                             <div className="flex space-x-2 mt-1">
                                 <span
-                                    key={currentPokemon.type1}
-                                    className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                                    className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeColourClass(
+                                        currentPokemon.type1
+                                    )}`}
                                 >
                                     {currentPokemon.type1}
                                 </span>
                                 {currentPokemon.type2 && (
                                     <span
-                                        key={currentPokemon.type2}
-                                        className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                                        className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeColourClass(
+                                            currentPokemon.type2
+                                        )}`}
                                     >
                                         {currentPokemon.type2}
                                     </span>
@@ -86,42 +92,25 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                     {/* Tabs */}
                     <div className="mt-4 border-b border-gray-200 dark:border-gray-700">
                         <nav className="-mb-px flex space-x-4">
-                            <button
-                                onClick={() => handleTabChange("stats")}
-                                className={`px-4 py-2 text-sm font-medium ${
-                                    activeTab === "stats"
-                                        ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
-                                        : "text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
-                                }`}
-                            >
-                                Stats
-                            </button>
-                            <button
-                                onClick={() => handleTabChange("abilities")}
-                                className={`px-4 py-2 text-sm font-medium ${
-                                    activeTab === "abilities"
-                                        ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
-                                        : "text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
-                                }`}
-                            >
-                                Abilities
-                            </button>
-                            <button
-                                onClick={() => handleTabChange("moves")}
-                                className={`px-4 py-2 text-sm font-medium ${
-                                    activeTab === "moves"
-                                        ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
-                                        : "text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
-                                }`}
-                            >
-                                Moves
-                            </button>
+                            {tabs.map((tab) => (
+                                <button
+                                    key={tab}
+                                    onClick={() => handleTabChange(tab)}
+                                    className={`px-4 py-2 text-sm font-medium ${
+                                        activeTab === tab
+                                            ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
+                                            : "text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
+                                    }`}
+                                >
+                                    {tab}
+                                </button>
+                            ))}
                         </nav>
                     </div>
 
                     {/* Tab Content */}
                     <div className="mt-6">
-                        {activeTab === "stats" && (
+                        {activeTab === "Stats" && (
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div>
                                     <h3 className="font-semibold text-gray-800 dark:text-gray-100">HP</h3>
@@ -141,7 +130,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                                 </div>
                             </div>
                         )}
-                        {activeTab === "abilities" && (
+                        {activeTab === "Abilities" && (
                             <div>
                                 <h3 className="font-semibold text-gray-800 dark:text-gray-100">Abilities</h3>
                                 <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
@@ -151,7 +140,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                                 </ul>
                             </div>
                         )}
-                        {activeTab === "moves" && (
+                        {activeTab === "Moves" && (
                             <div>
                                 <h3 className="font-semibold text-gray-800 dark:text-gray-100">Moves</h3>
                                 <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
