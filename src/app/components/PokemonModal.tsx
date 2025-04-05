@@ -44,7 +44,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                     <div className="flex justify-between items-start">
                         <div>
                             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                                {currentPokemon.name} #{currentPokemon.id}
+                                #{currentPokemon.dex}: {currentPokemon.name}
                             </h2>
                             <div className="flex space-x-2 mt-1">
                                 <span

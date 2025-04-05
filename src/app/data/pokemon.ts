@@ -36,17 +36,19 @@ export type PokemonType = (typeof pokemonTypes)[number];
 export class Pokemon {
     id: string;
     name: string;
+    dex: number;
     type1: PokemonType;
     type2?: PokemonType;
     stats: Stats;
     moves: string[];
-    constructor(loadedPokemon: LoadedPokemon) {
+    constructor(loadedPokemon: LoadedPokemon, i: number) {
         this.id = loadedPokemon.id;
         this.name = loadedPokemon.name;
         this.type1 = loadedPokemon.type1 as PokemonType;
         this.type2 = loadedPokemon.type2 ? (loadedPokemon.type2 as PokemonType) : undefined;
         this.stats = loadedPokemon.stats;
         this.moves = loadedPokemon.moves;
+        this.dex = i + 1;
     }
 }
 
@@ -60,5 +62,5 @@ interface LoadedPokemon {
 }
 
 export const pokemon: Record<string, Pokemon> = Object.fromEntries(
-    Object.entries(loadedPokemon).map(([id, mon]) => [id, new Pokemon(mon)])
+    Object.entries(loadedPokemon).map(([id, mon], i) => [id, new Pokemon(mon, i)])
 );
