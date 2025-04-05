@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { PokemonTableProps } from "../page";
-import { getTypeColourClass } from "./colours";
+import { getTypeBadgeColourClass, getTypeGradient } from "./colours";
 
 const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
     return (
@@ -25,7 +25,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
                         <tr
                             key={pokemon.id}
                             onClick={() => onRowClick(pokemon)}
-                            className="hover:bg-blue-50 dark:hover:bg-blue-900 cursor-pointer transition-colors"
+                            className={`hover:bg-blue-50 dark:hover:bg-blue-900 cursor-pointer transition-colors ${getTypeGradient(pokemon)}`}
                         >
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-200">
                                 <Image
@@ -45,7 +45,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                 <div className="flex space-x-2">
                                     <span
-                                        className={`px-2 py-1 rounded-full text-white text-xs font-semibold bg-${getTypeColourClass(
+                                        className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeBadgeColourClass(
                                             pokemon.type1
                                         )}`}
                                     >
@@ -53,7 +53,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ mons, onRowClick }) => {
                                     </span>
                                     {pokemon.type2 && (
                                         <span
-                                            className={`px-2 py-1 rounded-full text-white text-xs font-semibold bg-${getTypeColourClass(
+                                            className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeBadgeColourClass(
                                                 pokemon.type2
                                             )}`}
                                         >
