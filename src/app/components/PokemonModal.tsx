@@ -5,6 +5,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isRendered, setIsRendered] = useState(false);
     const [currentPokemon, setCurrentPokemon] = useState(pokemon);
+    const [activeTab, setActiveTab] = useState("stats"); // Track active tab
 
     useEffect(() => {
         if (pokemon) {
@@ -23,6 +24,10 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
             setIsRendered(false);
             onClose(); // Call the onClose callback after fade-out
         }, 300); // Match duration-300 for fade-out
+    };
+
+    const handleTabChange = (tab: string) => {
+        setActiveTab(tab);
     };
 
     if (!isRendered || !currentPokemon) return null;
@@ -78,23 +83,84 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                         </button>
                     </div>
 
-                    <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div>
-                            <h3 className="font-semibold text-gray-800 dark:text-gray-100">HP</h3>
-                            <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.hp}</p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-gray-800 dark:text-gray-100">Attack</h3>
-                            <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.attack}</p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-gray-800 dark:text-gray-100">Defense</h3>
-                            <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.defense}</p>
-                        </div>
-                        <div>
-                            <h3 className="font-semibold text-gray-800 dark:text-gray-100">Speed</h3>
-                            <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.speed}</p>
-                        </div>
+                    {/* Tabs */}
+                    <div className="mt-4 border-b border-gray-200 dark:border-gray-700">
+                        <nav className="-mb-px flex space-x-4">
+                            <button
+                                onClick={() => handleTabChange("stats")}
+                                className={`px-4 py-2 text-sm font-medium ${
+                                    activeTab === "stats"
+                                        ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
+                                        : "text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
+                                }`}
+                            >
+                                Stats
+                            </button>
+                            <button
+                                onClick={() => handleTabChange("abilities")}
+                                className={`px-4 py-2 text-sm font-medium ${
+                                    activeTab === "abilities"
+                                        ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
+                                        : "text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
+                                }`}
+                            >
+                                Abilities
+                            </button>
+                            <button
+                                onClick={() => handleTabChange("moves")}
+                                className={`px-4 py-2 text-sm font-medium ${
+                                    activeTab === "moves"
+                                        ? "text-blue-600 border-b-2 border-blue-600 dark:text-blue-400 dark:border-blue-400"
+                                        : "text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
+                                }`}
+                            >
+                                Moves
+                            </button>
+                        </nav>
+                    </div>
+
+                    {/* Tab Content */}
+                    <div className="mt-6">
+                        {activeTab === "stats" && (
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">HP</h3>
+                                    <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.hp}</p>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">Attack</h3>
+                                    <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.attack}</p>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">Defense</h3>
+                                    <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.defense}</p>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">Speed</h3>
+                                    <p className="text-gray-600 dark:text-gray-300">{currentPokemon.stats.speed}</p>
+                                </div>
+                            </div>
+                        )}
+                        {activeTab === "abilities" && (
+                            <div>
+                                <h3 className="font-semibold text-gray-800 dark:text-gray-100">Abilities</h3>
+                                <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
+                                    {/* {currentPokemon.abilities.map((ability, index) => (
+                                        <li key={index}>{ability}</li>
+                                    ))} */}
+                                </ul>
+                            </div>
+                        )}
+                        {activeTab === "moves" && (
+                            <div>
+                                <h3 className="font-semibold text-gray-800 dark:text-gray-100">Moves</h3>
+                                <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
+                                    {currentPokemon.moves.map((move, index) => (
+                                        <li key={index}>{move}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
