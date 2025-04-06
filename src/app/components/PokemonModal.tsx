@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PokemonModalProps } from "../page";
-import { getTypeColourClass } from "./colours";
+import { getTypeBadgeColourClass } from "./colours";
 
 const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -57,7 +57,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                             </h2>
                             <div className="flex space-x-2 mt-1">
                                 <span
-                                    className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeColourClass(
+                                    className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeBadgeColourClass(
                                         currentPokemon.type1
                                     )}`}
                                 >
@@ -65,7 +65,7 @@ const PokemonModal: React.FC<PokemonModalProps> = ({ pokemon, onClose }) => {
                                 </span>
                                 {currentPokemon.type2 && (
                                     <span
-                                        className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeColourClass(
+                                        className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${getTypeBadgeColourClass(
                                             currentPokemon.type2
                                         )}`}
                                     >
