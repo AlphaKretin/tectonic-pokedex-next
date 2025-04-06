@@ -3,39 +3,43 @@ import { Pokemon, PokemonType } from "../data/pokemon";
 export function getTypeBadgeColourClass(type: PokemonType) {
     switch (type) {
         case "Fire":
-            return "bg-red-500";
+            return "bg-fire";
         case "Water":
-            return "bg-blue-500";
+            return "bg-water";
         case "Grass":
-            return "bg-green-500";
+            return "bg-grass";
         case "Electric":
-            return "bg-yellow-500";
+            return "bg-electric";
         case "Psychic":
-            return "bg-purple-500";
+            return "bg-psychic";
         case "Ice":
-            return "bg-cyan-500";
+            return "bg-ice";
         case "Dragon":
-            return "bg-indigo-500";
+            return "bg-dragon";
         case "Dark":
-            return "bg-gray-800";
+            return "bg-dark";
         case "Fairy":
-            return "bg-pink-500";
+            return "bg-fairy";
         case "Fighting":
-            return "bg-orange-500";
+            return "bg-fighting";
         case "Flying":
-            return "bg-sky-500";
+            return "bg-flying";
         case "Poison":
-            return "bg-purple-700";
+            return "bg-poison";
         case "Ground":
-            return "bg-yellow-700";
+            return "bg-ground";
         case "Rock":
-            return "bg-gray-600";
+            return "bg-rock";
         case "Bug":
-            return "bg-green-700";
+            return "bg-bug";
         case "Ghost":
-            return "bg-indigo-700";
+            return "bg-ghost";
         case "Steel":
-            return "bg-gray-400";
+            return "bg-steel";
+        case "Normal":
+            return "bg-normal";
+        case "Mutant":
+            return "bg-mutant";
         default:
             return "bg-gray-500";
     }
@@ -50,128 +54,140 @@ export function getTypeGradient(pokemon: Pokemon): string {
     return getTypeGradientSolidColourClass(pokemon.type1);
 }
 
-// this sucks i really want to be able to use the same value for "from" and "to" for consistency
-// but tailwind believes you shouldn't ever generate class names dynamically so fuck
-// "pretty serious anti-pattern" my ass how is this better
+// ok so this is *better* than i thought it was last commit
+// but it's still annoying having to type them all out explicitly
+// i've defined the colours in my theme you should safelist all the appropriate variants smh
 function getTypeGradientFromColourClass(type: PokemonType): string {
     switch (type) {
         case "Fire":
-            return "from-red-900";
+            return "from-fire-bg";
         case "Water":
-            return "from-blue-900";
+            return "from-water-bg";
         case "Grass":
-            return "from-green-900";
+            return "from-grass-bg";
         case "Electric":
-            return "from-yellow-900";
+            return "from-electric-bg";
         case "Psychic":
-            return "from-purple-900";
+            return "from-psychic-bg";
         case "Ice":
-            return "from-cyan-900";
+            return "from-ice-bg";
         case "Dragon":
-            return "from-indigo-900";
+            return "from-dragon-bg";
         case "Dark":
-            return "from-gray-800";
+            return "from-dark-bg";
         case "Fairy":
-            return "from-pink-900";
+            return "from-fairy-bg";
         case "Fighting":
-            return "from-orange-900";
+            return "from-fighting-bg";
         case "Flying":
-            return "from-sky-900";
+            return "from-flying-bg";
         case "Poison":
-            return "from-purple-700";
+            return "from-poison-bg";
         case "Ground":
-            return "from-yellow-700";
+            return "from-ground-bg";
         case "Rock":
-            return "from-gray-600";
+            return "from-rock-bg";
         case "Bug":
-            return "from-green-700";
+            return "from-bug-bg";
         case "Ghost":
-            return "from-indigo-700";
+            return "from-ghost-bg";
         case "Steel":
-            return "from-gray-400";
+            return "from-steel-bg";
+        case "Normal":
+            return "from-normal-bg";
+        case "Mutant":
+            return "from-mutant-bg";
         default:
-            return "from-gray-900";
+            return "from-gray-500";
     }
 }
 
 function getTypeGradientToColourClass(type: PokemonType): string {
     switch (type) {
         case "Fire":
-            return "to-red-900";
+            return "to-fire-bg";
         case "Water":
-            return "to-blue-900";
+            return "to-water-bg";
         case "Grass":
-            return "to-green-900";
+            return "to-grass-bg";
         case "Electric":
-            return "to-yellow-900";
+            return "to-electric-bg";
         case "Psychic":
-            return "to-purple-900";
+            return "to-psychic-bg";
         case "Ice":
-            return "to-cyan-900";
+            return "to-ice-bg";
         case "Dragon":
-            return "to-indigo-900";
+            return "to-dragon-bg";
         case "Dark":
-            return "to-gray-800";
+            return "to-dark-bg";
         case "Fairy":
-            return "to-pink-900";
+            return "to-fairy-bg";
         case "Fighting":
-            return "to-orange-900";
+            return "to-fighting-bg";
         case "Flying":
-            return "to-sky-900";
+            return "to-flying-bg";
         case "Poison":
-            return "to-purple-700";
+            return "to-poison-bg";
         case "Ground":
-            return "to-yellow-700";
+            return "to-ground-bg";
         case "Rock":
-            return "to-gray-600";
+            return "to-rock-bg";
         case "Bug":
-            return "to-green-700";
+            return "to-bug-bg";
         case "Ghost":
-            return "to-indigo-700";
+            return "to-ghost-bg";
         case "Steel":
-            return "to-gray-400";
+            return "to-steel-bg";
+        case "Normal":
+            return "to-normal-bg";
+        case "Mutant":
+            return "to-mutant-bg";
         default:
-            return "to-gray-900";
+            return "to-gray-500-bg";
     }
 }
 
 function getTypeGradientSolidColourClass(type: PokemonType): string {
     switch (type) {
         case "Fire":
-            return "bg-red-900";
+            return "bg-fire-bg";
         case "Water":
-            return "bg-blue-900";
+            return "bg-water-bg";
         case "Grass":
-            return "bg-green-900";
+            return "bg-grass-bg";
         case "Electric":
-            return "bg-yellow-900";
+            return "bg-electric-bg";
         case "Psychic":
-            return "bg-purple-900";
+            return "bg-psychic-bg";
         case "Ice":
-            return "bg-cyan-900";
+            return "bg-ice-bg";
         case "Dragon":
-            return "bg-indigo-900";
+            return "bg-dragon-bg";
         case "Dark":
-            return "bg-gray-800";
+            return "bg-dark-bg";
         case "Fairy":
-            return "bg-pink-900";
+            return "bg-fairy-bg";
         case "Fighting":
-            return "bg-orange-900";
+            return "bg-fighting-bg";
         case "Flying":
-            return "bg-sky-900";
+            return "bg-flying-bg";
         case "Poison":
-            return "bg-purple-700";
+            return "bg-poison-bg";
         case "Ground":
-            return "bg-yellow-700";
+            return "bg-ground-bg";
         case "Rock":
-            return "bg-gray-600";
+            return "bg-rock-bg";
         case "Bug":
-            return "bg-green-700";
+            return "bg-bug-bg";
         case "Ghost":
-            return "bg-indigo-700";
+            return "bg-ghost-bg";
         case "Steel":
-            return "bg-gray-400";
+            return "bg-steel-bg";
+        case "Normal":
+            return "bg-normal-bg";
+        case "Mutant":
+            return "bg-mutant-bg";
         default:
-            return "bg-gray-900";
+            return "bg-gray-500";
     }
 }
